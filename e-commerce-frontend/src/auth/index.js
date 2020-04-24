@@ -52,3 +52,14 @@ export const signout = next => {
         }).catch(err=> console.log(err));
     }
 };
+
+export const isAuthenticated = () => {
+    if (typeof window == 'undefined') { //check if token is there
+        return false 
+    };
+    if (localStorage.getItem('jwt')) {
+        return JSON.parse(localStorage.getItem('jwt')) //return token in json format
+    } else {
+        return false;
+    }
+}
