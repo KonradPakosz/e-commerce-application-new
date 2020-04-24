@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import Layout from '../core/layout';
+import Layout from '../core/Layout';
 import {signin, authenticate, isAuthenticated} from '../auth';
 
 const Signin = () => {
