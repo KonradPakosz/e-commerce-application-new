@@ -33,3 +33,22 @@ export const signin = (user) => {
         console.log(err)
     })
 };
+
+export const authenticate = (data, next) => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('jwt', JSON.stringify(data));
+        next();
+    }
+}
+
+export const signout = next => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('jwt');
+        next();
+        return fetch(`${API}/signout`, {
+            method: "GET",
+        }).then(response => {
+            console.log("signout", response);
+        }).catch(err=> console.log(err));
+    }
+};
