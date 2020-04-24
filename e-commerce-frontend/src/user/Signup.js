@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Layout from '../core/layout';
-import { API } from '../config';
+import {signup} from '../auth';
 
 const Signup = () => {
     const [values, setValues] = React.useState({
@@ -15,23 +16,6 @@ const Signup = () => {
 
     const handleChange = name => event => {
         setValues({...values, error: false, [name]: event.target.value});
-    };
-
-    const signup = (user) => {
-        return fetch(`${API}/signup`, {
-            method: "POST",
-            headers: {
-                Accept: 'application/json',
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(user)
-        })
-        .then(response => {
-            return response.json()
-        })
-        .catch(err => {
-            console.log(err)
-        })
     };
 
     const clickSubmit = (event) => {
@@ -85,17 +69,17 @@ const Signup = () => {
         <div 
             className="alert alert-info" 
             style={{display: success ? '' : 'none'}}>
-            New Account has been created. Please sign in.
+            New Account has been created. Please <Link to="/signin">Sign In.</Link>
         </div>
     )
 
     return (
         <Layout 
-        title="Signup Page" 
-        description="Signup to Node React E-commerce App"
-        className="container col-md-8 offset-md-2">
-        {showSuccess()}
-        {showError()}
+            title="Signup Page" 
+            description="Signup to Node React E-commerce App"
+            className="container col-md-8 offset-md-2">
+            {showSuccess()}
+            {showError()}
             {signUpForm()}
         </Layout>
     )
