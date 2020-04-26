@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 import { isAuthenticated } from '../auth';
 import Dropin from "braintree-web-drop-in-react"
 
-const Checkout = ({products}) => {
+const Checkout = ({products, setRun = f => f, run = undefined}) => {
     const [data, setData] = useState({
         success:false,
         clientToken: null,
@@ -79,14 +79,21 @@ const Checkout = ({products}) => {
 
                 }
                 createOrder(userId, token, createOrderData)
-
-
-                setData({ ...data, success: response.success});
-                emptyCart(()=> {
-                    console.log("payment success and empty cart") //change later
-                    setData({ loading: false})
+                    .then(response => {
+                        emptyCart(() => {
+                            setRun(!run); // run useEffect in parent Cart
+                            console.log('payment success and empty cart');
+                            setData({
+                                loading: false,
+                                success: true
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        setData({ loading: false });
+                    });
                 })
-            })
             .catch(error => {
                 console.log(error)
                 setData({ loading: false});
