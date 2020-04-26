@@ -2,13 +2,16 @@ import React, {useState} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import ShowImage from './ShowImage'
 import moment from 'moment'
-import {addItem, updateItem} from './cartHelpers'
+import {addItem, updateItem, removeItem} from './cartHelpers'
 
 const Card = ({ 
     product, 
     showViewProductButton = true, 
     showAddToCartButton = true,
-    cartUpdate = false
+    cartUpdate = false,
+    showRemoveProductButton = false,
+    setRun = f => f, // default value of function
+    run = undefined // default value of undefined
 }) => {
     
     const [redirect, setRedirect] = useState (false);
@@ -41,11 +44,29 @@ const Card = ({
     const showCartButton = (showAddToCartButton) => {
         return (
             showAddToCartButton && (
-            <button onClick={addToCart} className="btn btn-outline-success mt-2 mb-2">
+            <button 
+                onClick={addToCart} 
+                className="btn btn-outline-success mt-2 mb-2">
                 Add to Card
             </button>
         ))
     }
+
+    const showRemoveButton = showRemoveProductButton => {
+        return (
+          showRemoveProductButton && (
+            <button
+              onClick={() => {
+                removeItem(product._id);
+                setRun(!run); // run useEffect in parent Cart
+              }}
+              className="btn btn-outline-danger mt-2 mb-2"
+            >
+              Remove Product
+            </button>
+          )
+        );
+      };
 
     const showStock = (quantity) => {
         return quantity > 0 ? (
@@ -57,11 +78,12 @@ const Card = ({
     }
 
     const handleChange = productId => event => {
-        setCount(event.target.value < 1 ? 1 : event.target.value)
-        if(event.target.value >= 1) {
-            updateItem(productId, event.target.value)
-        } 
-    }
+        setRun(!run); // run useEffect in parent Cart
+        setCount(event.target.value < 1 ? 1 : event.target.value);
+        if (event.target.value >= 1) {
+          updateItem(productId, event.target.value);
+        }
+      };
 
     const showCartUpdateOptions = cartUpdate => {
         return cartUpdate && <div>
@@ -84,7 +106,7 @@ const Card = ({
                         {product.description.substring(0, 100)}
                     </p>
                     <p className="black-10">
-                        ${product.price}
+                        €{product.price}
                     </p>
                     <p className="black-9">
                         Category: {product.category && product.category.name}
@@ -96,7 +118,7 @@ const Card = ({
                     <br/>
                     {showViewButton(showViewProductButton)}
                     {showCartButton(showAddToCartButton)}
-
+                    {showRemoveButton(showRemoveProductButton)}
                     {showCartUpdateOptions(cartUpdate)}
                 </div>
             </div>
