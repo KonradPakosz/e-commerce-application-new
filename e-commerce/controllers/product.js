@@ -89,15 +89,7 @@ exports.update = (req, res) => {
             });
         };
 
-        //validation
-        const { name, description, price, category, quantity, shipping } = fields;
         
-        if (!name || !description || !price || !category || !quantity || !shipping) {
-            return res.status(400).json({
-                error: "All fields must be filled in"
-            });
-        };
-
         //same as create but overwrite current object instead
         let product = req.product
         //lodash extend method
@@ -134,7 +126,7 @@ exports.update = (req, res) => {
 exports.list = (req, res) => {
     let order = req.query.order ? req.query.order : 'asc';
     let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
-    let limit = req.query.limit ? parseInt(req.query.limit) : 6;
+    let limit = req.query.limit ? parseInt(req.query.limit) : 8;
 
     Product.find()
     .select("-photo") //remove photo from search for quicker results
@@ -185,7 +177,7 @@ exports.listCategories = (req, res) => {
 exports.listBySearch = (req, res) => {
     let order = req.body.order ? req.body.order : "desc";
     let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
-    let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+    let limit = req.body.limit ? parseInt(req.body.limit) : 150;
     let skip = parseInt(req.body.skip);
     let findArgs = {};
  
