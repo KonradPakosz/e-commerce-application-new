@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Checkbox = ({categories, handleFilters}) => {
+const Checkbox = ({ categories, handleFilters }) => {
     const [checked, setChecked] = useState([])
 
     const handleToggle = cat => () => {
@@ -8,7 +8,7 @@ const Checkbox = ({categories, handleFilters}) => {
         const newChecedCategoryId = [...checked]
         //push into array if checked was not already checked
         //else pull out of array
-        if(currentCategoryId === -1) {
+        if (currentCategoryId === -1) {
             newChecedCategoryId.push(cat)
         } else {
             newChecedCategoryId.splice(currentCategoryId, 1)
@@ -19,10 +19,12 @@ const Checkbox = ({categories, handleFilters}) => {
     }
 
     return categories.map((cat, i) => (
-        <li className="list-unstyled">
-            <input onChange={handleToggle(cat._id)} value={checked.indexOf(cat._id === -1)} type="checkbox" className="form-check-input"/>
-            <label className="form-check-label">{cat.name}</label>
-        </li>
+        <div >
+            <label>
+                <input onChange={handleToggle(cat._id)} value={checked.indexOf(cat._id === -1)} type="checkbox" className="form-check-input" />
+                <span className="form-check-label">{cat.name}</span>
+            </label>
+        </div>
     ))
 }
 

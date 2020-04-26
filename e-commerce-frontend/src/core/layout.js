@@ -3,7 +3,7 @@ import Menu from './Menu';
 import "../styles.css";
 
 const Layout = ({title = 'Title', description = 'Description', className, children}) => (
-    <div>
+    <div className="background-picture">
         <Menu />
         <div className="jumbotron">
             <h1>{title}</h1>

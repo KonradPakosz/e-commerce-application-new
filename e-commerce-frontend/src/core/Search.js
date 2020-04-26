@@ -76,7 +76,7 @@ const Search = () => {
 
     const searchForm = () => (
         <form onSubmit= {searchSubmit}>
-            <span className="input-group-text">
+            <span className="input-group-text  search-bar">
                 <div className="input-group input-group-lg">
                     <div className="input-group-prepend">
                         <select className="btn mr-2" onChange={handleChange('category')}>
@@ -94,7 +94,7 @@ const Search = () => {
                         onChange={handleChange("search")} 
                         placeholder="Search by Name"/>
                 </div>
-                <div className="btn input-group-append" style={{border: "none"}}>
+                <div className="btn input-group-append btn-search" style={{border: "none"}}>
                     <button className="input-group-text">Search</button>
                 </div>
             </span>
@@ -103,8 +103,8 @@ const Search = () => {
 
     return (
         <div>
-            <div className="row">
-                <div className="container mb-3">
+            <div className="row ">
+                <div className="container mb-3 ">
                     {searchForm()}
                 </div>
                 <div className="container-fluid mb-3">
