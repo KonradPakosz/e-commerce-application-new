@@ -17,7 +17,6 @@ const Checkout = ({products, setRun = f => f, run = undefined}) => {
         loading: false
     })
     
-
     const userId = isAuthenticated() && isAuthenticated().user._id
     const token = isAuthenticated && isAuthenticated().token
 
@@ -55,6 +54,8 @@ const Checkout = ({products, setRun = f => f, run = undefined}) => {
         );
     };
 
+    let deliveryAddress = data.address
+
     const buy = () => {
         setData({ loading: true})
         let nonce;
@@ -75,7 +76,7 @@ const Checkout = ({products, setRun = f => f, run = undefined}) => {
                     products: products,
                     transaction_id: response.transaction.id,
                     amount: response.transaction.amount,
-                    address: data.address
+                    address: deliveryAddress
 
                 }
                 createOrder(userId, token, createOrderData)
