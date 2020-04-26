@@ -41,7 +41,7 @@ const Product = (props) => {
                 {product && 
                 product.description && 
                 product.description &&
-                <Card product={product} showViewProductButton={false}/>}
+                <Card product={product} showViewProductButton={false} singleProductPage={true}/>}
             </div>
             <div className="col-4">
                     <h4>Related Products</h4>

@@ -4,6 +4,13 @@ import ShowImage from './ShowImage'
 import moment from 'moment'
 import { addItem, updateItem, removeItem } from './cartHelpers'
 
+const isSingleProductPage = (product, singleProductPage) => {
+    if (singleProductPage) { return (product.description) }
+    else {
+        return (product.description.substring(0, 100))
+    }
+}
+
 const Card = ({
     product,
     showViewProductButton = true,
@@ -11,7 +18,8 @@ const Card = ({
     cartUpdate = false,
     showRemoveProductButton = false,
     setRun = f => f, // default value of function
-    run = undefined // default value of undefined
+    run = undefined, // default value of undefined
+    singleProductPage = false
 }) => {
 
     const [redirect, setRedirect] = useState(false);
@@ -100,11 +108,11 @@ const Card = ({
         <div className="card card-borders">
             <div className="card-body">
                 {shouldRedirect(redirect)}
-                
+
                 <h5 className="card-title card-title-color" >{product.name}</h5>
                 <ShowImage item={product} url="product" />
                 <p className="card-text card-description">
-                    {product.description.substring(0, 100)}
+                    {isSingleProductPage(product, singleProductPage)}...
                 </p>
             </div>
             <ul class="list-group list-group-flush" >
